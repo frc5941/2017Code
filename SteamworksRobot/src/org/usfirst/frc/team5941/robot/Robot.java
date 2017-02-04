@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
-
+import edu.wpi.first.wpilibj.XboxController;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -21,7 +21,9 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
-	
+	VictorSP right = VictorSP(0);
+   VictorSP left = VictorSP(1);
+   XboxController xbox = XboxController(0);
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -67,7 +69,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        
+        right.set(xbox.getRawAxis(5));
+        left.set(xbox.getRawAxis(4));
     }
     
     /**
