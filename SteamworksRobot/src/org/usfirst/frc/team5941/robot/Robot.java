@@ -21,9 +21,9 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
-	VictorSP right = VictorSP(0);
-   VictorSP left = VictorSP(1);
-   XboxController xbox = XboxController(0);
+	VictorSP right = new VictorSP(0);
+   VictorSP left = new VictorSP(1);
+   XboxController xbox = new XboxController(0);
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         right.set(xbox.getRawAxis(5));
-        left.set(xbox.getRawAxis(4));
+        left.set(-xbox.getRawAxis(1));
     }
     
     /**
