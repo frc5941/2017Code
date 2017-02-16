@@ -22,8 +22,8 @@ public class Robot extends IterativeRobot {
     String autoSelected;
     SendableChooser chooser;
 	VictorSP right = new VictorSP(0);
-   VictorSP left = new VictorSP(1);
-   XboxController xbox = new XboxController(0);
+    VictorSP left = new VictorSP(1);
+    XboxController xbox = new XboxController(0);
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -69,8 +69,14 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        right.set(xbox.getRawAxis(5));
-        left.set(-xbox.getRawAxis(1));
+    	double rightAxis = xbox.getRawAxis(5), leftAxis = -xbox.getRawAxis(1);
+    	if((rightAxis > 0 && leftAxis > 0) || (rightAxis < 0 && leftAxis < 0)){
+    		right.set(rightAxis*0.2); //change to 0.33
+    		left.set(leftAxis*0.2);
+    	} else {
+    		right.set(rightAxis*0.5); //change to 0.75
+        	left.set(leftAxis*0.5);
+    	}
     }
     
     /**
