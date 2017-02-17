@@ -98,6 +98,7 @@ public class Robot extends IterativeRobot {
 		//Shooter?
 			//Aim
 				//Test line sensors, positive response = rumble
+				//Right Bumper (Button 5)
 			//Firing
 				//Right Trigger (Axis 3)
     }
