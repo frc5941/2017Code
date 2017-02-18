@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.CameraServer;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -24,6 +25,10 @@ public class Robot extends IterativeRobot {
 	VictorSP right = new VictorSP(0);
     VictorSP left = new VictorSP(1);
     XboxController xbox = new XboxController(0);
+    
+    
+    
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -33,6 +38,7 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
+        CameraServer.getInstance().startAutomaticCapture(0);
     }
     
 	/**
