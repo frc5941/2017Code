@@ -22,6 +22,7 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
+<<<<<<< HEAD
 	VictorSP right = new VictorSP(0);
     VictorSP left = new VictorSP(1);
     XboxController xbox = new XboxController(0);
@@ -29,6 +30,18 @@ public class Robot extends IterativeRobot {
     
     
     
+=======
+	
+	
+	VictorSP right = new VictorSP(0);  //Right Side Drive
+    VictorSP left = new VictorSP(1);   //Left Side Drive
+	// PWM 2 - Winch Motor Controller
+	// PWM 3 - Ball Intake Motor Controller
+	// PWM 4 - Right Line Sensor
+	// PWM 5 - Left Line Sensor
+	
+    XboxController xbox = new XboxController(0); 
+>>>>>>> origin/master
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -75,7 +88,10 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	double rightAxis = xbox.getRawAxis(5), leftAxis = -xbox.getRawAxis(1);
+		
+		//Driving
+    	double rightAxis = xbox.getRawAxis(5), leftAxis = -xbox.getRawAxis(1); 
+		//If turning motors at 33% speed, else at 75% speed
     	if((rightAxis > 0 && leftAxis > 0) || (rightAxis < 0 && leftAxis < 0)){
     		right.set(rightAxis*0.2); //change to 0.33
     		left.set(leftAxis*0.2);
@@ -83,6 +99,20 @@ public class Robot extends IterativeRobot {
     		right.set(rightAxis*0.5); //change to 0.75
         	left.set(leftAxis*0.5);
     	}
+		
+		//Climbing
+			//Left Bumper (Button 4)
+		
+		//Ball Intake
+			//Left Trigger (Axis 2)
+		
+		
+		//Shooter?
+			//Aim
+				//Test line sensors, positive response = rumble
+				//Right Bumper (Button 5)
+			//Firing
+				//Right Trigger (Axis 3)
     }
     
     /**
