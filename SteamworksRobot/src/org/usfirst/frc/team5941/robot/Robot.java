@@ -22,17 +22,8 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
-<<<<<<< HEAD
-	VictorSP right = new VictorSP(0);
-    VictorSP left = new VictorSP(1);
-    XboxController xbox = new XboxController(0);
-    
-    
-    
-    
-=======
-	
-	
+
+
 	VictorSP right = new VictorSP(0);  //Right Side Drive
     VictorSP left = new VictorSP(1);   //Left Side Drive
 	// PWM 2 - Winch Motor Controller
@@ -41,7 +32,7 @@ public class Robot extends IterativeRobot {
 	// PWM 5 - Left Line Sensor
 	
     XboxController xbox = new XboxController(0); 
->>>>>>> origin/master
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
