@@ -25,9 +25,9 @@ public class Robot extends IterativeRobot {
 
 
 	VictorSP right = new VictorSP(0);  //Right Side Drive
-    VictorSP left = new VictorSP(1);   //Left Side Drive
-	// PWM 2 - Winch Motor Controller
-	// PWM 3 - Ball Intake Motor Controller
+   VictorSP left = new VictorSP(1);   //Left Side Drive
+	TalonSRX winch = new TalonSRX(2);  // PWM 2 - Winch Motor Controller
+	TalonSRX intake = new TalonSRX(3); // PWM 3 - Ball Intake Motor Controller
 	// PWM 4 - Right Line Sensor
 	// PWM 5 - Left Line Sensor
 	
