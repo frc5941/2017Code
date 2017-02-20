@@ -25,14 +25,19 @@ public class Robot extends IterativeRobot {
 
 
 	VictorSP right = new VictorSP(0);  //Right Side Drive
-   VictorSP left = new VictorSP(1);   //Left Side Drive
-	TalonSRX winch = new TalonSRX(2);  // PWM 2 - Winch Motor Controller
-	TalonSRX intake = new TalonSRX(3); // PWM 3 - Ball Intake Motor Controller
-	// PWM 4 - Right Line Sensor
-	// PWM 5 - Left Line Sensor
+    VictorSP left = new VictorSP(1);   //Left Side Drive
+	VictorSP winch = new VictorSP(2);  // PWM 2 - Winch Motor Controller
+	VictorSP intake = new VictorSP(3); // PWM 3 - Ball Intake Motor Controller
+	// PWM 4 - Shooter 
+	// PWM 5 - Right Line Sensor
+	// PWM 6 - Left Line Sensor
+	// PWM 7 - Shooter Servo
+	// PWM 8 - Door Servo
 	
     XboxController xbox = new XboxController(0); 
 
+	boolean climbingDisabled = true;
+	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -42,7 +47,7 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        CameraServer.getInstance().startAutomaticCapture(0);
+        //CameraServer.getInstance().startAutomaticCapture(0);
     }
     
 	/**
@@ -92,18 +97,27 @@ public class Robot extends IterativeRobot {
     	}
 		
 		//Climbing
-			//Left Bumper (Button 4)
+		if(xbox.getRawButton(7)){
+			climbingDisabled = flase;
+		}
+		
+		if(!climbingDisabled && xbox.getRawAxis(3)>0){
+			winch.set(0.5);
+		}
+		
 		
 		//Ball Intake
-			//Left Trigger (Axis 2)
+		if(xbox.getRawAxis(2)>0){
+			intake.set(0.25);
+		}
 		
 		
-		//Shooter?
-			//Aim
-				//Test line sensors, positive response = rumble
-				//Right Bumper (Button 5)
-			//Firing
-				//Right Trigger (Axis 3)
+		//Shooter
+			//Start button
+				//Time delay auto servo lift
+			//Stop button
+				//Servo down then turn off motor
+		
     }
     
     /**
