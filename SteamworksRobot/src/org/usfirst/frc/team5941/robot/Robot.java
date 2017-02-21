@@ -28,7 +28,7 @@ public class Robot extends IterativeRobot {
 	VictorSP left = new VictorSP(1);   //Left Side Drive
 	VictorSP winch = new VictorSP(2);  // PWM 2 - Winch Motor Controller
 	VictorSP intake = new VictorSP(3); // PWM 3 - Ball Intake Motor Controller
-	// PWM 4 - Shooter 
+	VictorSP shooter = new VictorSP(4); // PWM 4 - Shooter
 	// PWM 5 - Right Line Sensor
 	// PWM 6 - Left Line Sensor
 	// PWM 7 - Shooter Servo
@@ -104,6 +104,7 @@ public class Robot extends IterativeRobot {
     	
 		}
 		
+    	/*
 		//SWITCHING DRIVER SPEEDS
 		if(xbox.getRawButton(6)){
 		
@@ -121,16 +122,16 @@ public class Robot extends IterativeRobot {
 			
 			}
 		}
-		
+		*/
 		
 		//Climbing
-		if(xbox.getRawButton(7)){
+		if(xbox.getRawButton(7)){ //back button
 			
-			climbingDisabled = flase;
+			climbingDisabled = false;
 		
 		}
 		
-		if(!climbingDisabled && xbox.getRawAxis(3)>0){
+		if(!climbingDisabled && xbox.getRawButton(3)){ //Y button
 			
 			winch.set(0.5);
 		
@@ -139,19 +140,18 @@ public class Robot extends IterativeRobot {
 		
 		
 		//Ball Intake
-		if(xbox.getRawAxis(2)>0){ //If Left Trigger, activate intake
+		if(xbox.getRawButton(1)){ //If B button, activate intake
 			
-			intake.set(0.25);
+			intake.set(-1);
 		
 		}
 		
 		
 		
 		//Shooter
-			//Start button
-				//Time delay auto servo lift
-			//Stop button
-				//Servo down then turn off motor
+		if(xbox.getRawButton(2)){ //X button
+			shooter.set(0.5);
+		}
 		
     }
     
