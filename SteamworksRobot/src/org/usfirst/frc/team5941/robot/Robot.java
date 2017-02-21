@@ -131,16 +131,21 @@ public class Robot extends IterativeRobot {
 		
 		}
 		
-		if(!climbingDisabled && xbox.getRawButton(3)){ //Y button
+		if(!climbingDisabled && xbox.getRawButton(3)){ //X button
 			
 			winch.set(0.5);
 		
 		}
 		
+		if(!climbingDisabled && xbox.getRawButton(4)){ //Y button
+			
+			winch.set(0);
+		
+		}
 		
 		
 		//Ball Intake
-		if(xbox.getRawButton(1)){ //If B button, activate intake
+		if(xbox.getRawButton(1)){ //If A button, activate intake
 			
 			intake.set(-1);
 		
@@ -149,7 +154,7 @@ public class Robot extends IterativeRobot {
 		
 		
 		//Shooter
-		if(xbox.getRawButton(2)){ //X button
+		if(xbox.getRawButton(2)){ //B button
 			shooter.set(0.5);
 		}
 		
