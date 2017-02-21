@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
 
 
 	VictorSP right = new VictorSP(0);  //Right Side Drive
-    VictorSP left = new VictorSP(1);   //Left Side Drive
+	VictorSP left = new VictorSP(1);   //Left Side Drive
 	VictorSP winch = new VictorSP(2);  // PWM 2 - Winch Motor Controller
 	VictorSP intake = new VictorSP(3); // PWM 3 - Ball Intake Motor Controller
 	// PWM 4 - Shooter 
@@ -37,6 +37,9 @@ public class Robot extends IterativeRobot {
     XboxController xbox = new XboxController(0); 
 
 	boolean climbingDisabled = true;
+	
+	double driverForwardSpeed = 0.5;
+	double driverTurnSpeed = 0.2;
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -87,29 +90,61 @@ public class Robot extends IterativeRobot {
 		
 		//Driving
     	double rightAxis = xbox.getRawAxis(5), leftAxis = -xbox.getRawAxis(1); 
+		
 		//If turning motors at 33% speed, else at 75% speed
     	if((rightAxis > 0 && leftAxis > 0) || (rightAxis < 0 && leftAxis < 0)){
-    		right.set(rightAxis*0.2); //change to 0.33
-    		left.set(leftAxis*0.2);
+    		
+			right.set(rightAxis*driverTurnSpeed);
+    		left.set(leftAxis*driverTurnSpeed);
+			
     	} else {
-    		right.set(rightAxis*0.5); //change to 0.75
-        	left.set(leftAxis*0.5);
-    	}
+    		
+			right.set(rightAxis*driverForwardSpeed);
+        	left.set(leftAxis*driverForwardSpeed);
+    	
+		}
+		
+		//SWITCHING DRIVER SPEEDS
+		if(xbox.getRawButton(6)){
+		
+			if(xbox.getRawButton(3)){
+				
+				driverForwardSpeed = 0.75;
+				driverTurnSpeed = 0.33;
+			
+			}
+			
+			if(xbox.getRawButton(1)){
+			
+				driverForwardSpeed = 0.5;
+				driverTurnSpeed = 0.2;
+			
+			}
+		}
+		
 		
 		//Climbing
 		if(xbox.getRawButton(7)){
+			
 			climbingDisabled = flase;
+		
 		}
 		
 		if(!climbingDisabled && xbox.getRawAxis(3)>0){
+			
 			winch.set(0.5);
+		
 		}
+		
 		
 		
 		//Ball Intake
-		if(xbox.getRawAxis(2)>0){
+		if(xbox.getRawAxis(2)>0){ //If Left Trigger, activate intake
+			
 			intake.set(0.25);
+		
 		}
+		
 		
 		
 		//Shooter
