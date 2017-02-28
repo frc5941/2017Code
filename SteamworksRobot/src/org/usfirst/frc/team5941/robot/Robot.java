@@ -33,6 +33,7 @@ public class Robot extends IterativeRobot {
 	// PWM 6 - Left Line Sensor
 	// PWM 7 - Shooter Servo
 	// PWM 8 - Door Servo
+	//TalonSRX testStuff = new TalonSRX(9); // PWM 9 - Test/Talon
 	
     XboxController xbox = new XboxController(0); 
 
@@ -40,6 +41,8 @@ public class Robot extends IterativeRobot {
 	
 	double driverForwardSpeed = 0.5;
 	double driverTurnSpeed = 0.2;
+	
+	boolean goodDriver = false;
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -91,6 +94,28 @@ public class Robot extends IterativeRobot {
 		//Driving
     	double rightAxis = xbox.getRawAxis(5), leftAxis = -xbox.getRawAxis(1); 
 		
+    	
+		//SWITCHING DRIVER SPEEDS
+		if(xbox.getRawButton(7) && xbox.getRawButton(10)){ //Back Button + Right Stick Click
+						
+			goodDriver = !goodDriver;
+					
+		}
+		
+    	
+    	if (goodDriver){
+    		
+    		driverForwardSpeed = 0.75;
+			driverTurnSpeed = 0.33;
+			
+    	} else {
+    		
+    		driverForwardSpeed = 0.5;
+			driverTurnSpeed = 0.2;
+			
+    	}
+    	
+    	
 		//If turning motors at 33% speed, else at 75% speed
     	if((rightAxis > 0 && leftAxis > 0) || (rightAxis < 0 && leftAxis < 0)){
     		
@@ -104,59 +129,73 @@ public class Robot extends IterativeRobot {
     	
 		}
 		
-    	/*
-		//SWITCHING DRIVER SPEEDS
-		if(xbox.getRawButton(6)){
-		
-			if(xbox.getRawButton(3)){
-				
-				driverForwardSpeed = 0.75;
-				driverTurnSpeed = 0.33;
-			
-			}
-			
-			if(xbox.getRawButton(1)){
-			
-				driverForwardSpeed = 0.5;
-				driverTurnSpeed = 0.2;
-			
-			}
-		}
-		*/
+    	
 		
 		//Climbing
-		if(xbox.getRawButton(7)){ //back button
+		if(xbox.getRawButton(8)){ //Start button
 			
-			climbingDisabled = false;
-		
+			if (climbingDisabled == true){
+				
+				climbingDisabled = false;
+				
+			} else if (climbingDisabled == false){
+				
+				climbingDisabled = true;
+				
+			}
+			
 		}
 		
-		if(!climbingDisabled && xbox.getRawButton(3)){ //X button
+		
+		if(!climbingDisabled && xbox.getRawButton(5)){ //Left Bumper
 			
 			winch.set(0.5);
 		
-		}
+		} else {
 		
-		if(!climbingDisabled && xbox.getRawButton(4)){ //Y button
-			
 			winch.set(0);
 		
 		}
 		
 		
+		
 		//Ball Intake
-		if(xbox.getRawButton(1)){ //If A button, activate intake
+		if(xbox.getRawAxis(2) > 0.2){ //Left Trigger
 			
 			intake.set(-1);
+		
+		} else {
+		
+			intake.set(0);
 		
 		}
 		
 		
 		
 		//Shooter
-		if(xbox.getRawButton(2)){ //B button
+		if(xbox.getRawAxis(3) > 0.2){ //Right Trigger
+		
 			shooter.set(0.5);
+		
+		} else {
+		
+			shooter.set(0);
+		
 		}
+		
+		
+		/*
+		//Test Stuff
+		if(xbox.getRawButton(5)){ // LeftBumper
+			
+			testStuff.set(0.24);
+		
+		} else {
+		
+			testStuff.set(0);
+		
+		}
+		*/
 		
     }
     
