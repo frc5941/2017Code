@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.TalonSRX;
-import edu.wpi.first.wpilibj.Joystick;
+//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.CameraServer;
 /**
@@ -84,13 +84,13 @@ public class Robot extends IterativeRobot {
 	    		practiceRightA.set(0);
 	    		practiceRightB.set(0);
 			}
-			while (t.get() < 4.0){
-				//right.set(0.5);
+			while (t.get() < 4.0){ //Reverse for 3 seconds (for gear delivery)
+				//right.set(-0.5);
 	        	//left.set(0.5);
-	    		practiceLeftA.set(0.5);
+	    		practiceLeftA.set(0.5); //Since Left is Negative=Forward, Positive is Reverse
 	    		practiceLeftB.set(0.5);
-	    		practiceRightA.set(0.5);
-	    		practiceRightB.set(0.5);
+	    		practiceRightA.set(-0.5); //Since Right is Positive=Forward, Negative is Reverse
+	    		practiceRightB.set(-0.5);
 			}
 			//right.set(0);
         	//left.set(0);
@@ -98,8 +98,38 @@ public class Robot extends IterativeRobot {
     		practiceLeftB.set(0);
     		practiceRightA.set(0);
     		practiceRightB.set(0);
-		} else if (selection.equals("Left Gear")){
+		} else if (selection.equals("Left Turn")){
+			//60 degree turns
+			//TEST CODE
+			/**
+			 * Currently (for testing):
+			 * -waits 1 second
+			 * -spins to the left
+			 * -stop motors
+			 */
 			
+			while (t.get() < 1.0){
+				//right.set(0);
+	        	//left.set(0);
+	    		practiceLeftA.set(0);
+	    		practiceLeftB.set(0);
+	    		practiceRightA.set(0);
+	    		practiceRightB.set(0);
+			}
+			while (t.get() < 2.0){ //Spin at half speed for 1 second
+				//right.set(-0.5);
+	        	//left.set(-0.5);
+	    		practiceLeftA.set(-0.5); //Since Left is Negative=Forward, Positive is Reverse
+	    		practiceLeftB.set(-0.5);
+	    		practiceRightA.set(-0.5); //Since Right is Positive=Forward, Negative is Reverse
+	    		practiceRightB.set(-0.5);
+			}
+			//right.set(0);
+        	//left.set(0);
+    		practiceLeftA.set(0);
+    		practiceLeftB.set(0);
+    		practiceRightA.set(0);
+    		practiceRightB.set(0);
 		} else if (selection.equals("Right Gear")){
 			
 		} else if (selection.equals("Fuel")){
