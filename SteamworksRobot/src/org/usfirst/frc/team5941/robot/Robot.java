@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 //import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.cscore.UsbCamera;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -25,7 +26,7 @@ public class Robot extends IterativeRobot {
     final String middleAuto = "Middle";
     final String leftAuto = "Left";
     final String rightAuto = "Right";
-    final String fuelAuto = "Fuel";
+    final String testAuto = "Test";
     String autoSelected;
     SendableChooser chooser;
 
@@ -36,7 +37,7 @@ public class Robot extends IterativeRobot {
 	VictorSP winchB = new VictorSP(3); // PWM 3 - Winch Motor Controller
 	VictorSP intake = new VictorSP(4); // PWM 4 - Intake
 	TalonSRX shooter = new TalonSRX(5); // PWM 5 - Shooter	
-	Servo ballStop = new Servo(6); //PWM 6 - Ball Stop
+	//Servo ballStop = new Servo(6); //PWM 6 - Ball Stop
 	
 	/*
 	//TESTING
@@ -47,7 +48,7 @@ public class Robot extends IterativeRobot {
 	VictorSP practiceRightB = new VictorSP(8); //practice right drive motor B
 	int testMotor = 0;
 	
-	//PWM lineSensor = new PWM(4);
+	
 	//END TEST STUFF
 	*/
 	
@@ -60,7 +61,7 @@ public class Robot extends IterativeRobot {
 	double driverForwardSpeed = 0.5;
 	double driverTurnSpeed = 0.2;
 	
-	boolean goodDriver = false;
+	boolean goodDriver = true;
 	
 	boolean runIntake = true;
 	boolean shooterReady = false;
@@ -69,7 +70,7 @@ public class Robot extends IterativeRobot {
 	boolean runAuto = true;
 	Timer t = new Timer();
     
-	
+	UsbCamera cam = new UsbCamera("cam0", 0);
 	
 	/**
 	 * This function is for 1 run of autonomous
@@ -88,21 +89,14 @@ public class Robot extends IterativeRobot {
 			 * -stop motors
 			 */
 			
-			while (t.get() < 1.0){
-				left.set(0);
-	        	right.set(0);
-	    		//practiceLeftA.set(0);
-	    		//practiceLeftB.set(0);
-	    		//practiceRightA.set(0);
-	    		//practiceRightB.set(0);
-			}
-			while (t.get() < 2.8){ //Backward for 1.5 seconds (for gear delivery) 
+			
+			while (t.get() < 1.6){ //Backward for 1.5 seconds (for gear delivery) 
 				/*
 				 * for 0.5 speed (0.46 right), 1.75 sec
 				 * for 0.35 speed (0.33 right), 2.5 sec
 				 */
-	        	left.set(-0.35);
-	        	right.set(0.33);
+	        	left.set(0.38);
+	        	right.set(-0.32);
 	    		//practiceLeftA.set(0.35); 
 	    		//practiceLeftB.set(0.35);
 	    		//practiceRightA.set(-0.33); 
@@ -115,73 +109,83 @@ public class Robot extends IterativeRobot {
     		//practiceRightA.set(0);
     		//practiceRightB.set(0);
 		} else if (selection.equals("Left")){
-			//60 degree turns
-			//TEST CODE for Left Turn, not Left Side Start
-			/**
-			 * Currently (for testing):
-			 * -waits 1 second
-			 * -spins to the left
-			 * -stop motors
-			 */
 			
-			while (t.get() < 1.0){
-				left.set(0);
-	        	right.set(0);
-	    		//practiceLeftA.set(0);
-	    		//practiceLeftB.set(0);
-	    		//practiceRightA.set(0);
-	    		//practiceRightB.set(0);
-			}
-			while (t.get() < 1.25){ //Spin counter clockwise at 0.35/0.33 speed for 0.25 seconds
-	        	left.set(-0.35);
-	        	right.set(-0.33);
-	    		//practiceLeftA.set(-0.35); //Since Left is Negative=Forward, Positive is Reverse
-	    		//practiceLeftB.set(-0.35);
-	    		//practiceRightA.set(-0.33); //Since Right is Positive=Forward, Negative is Reverse
-	    		//practiceRightB.set(-0.33);
-			}
-			left.set(0);
-        	right.set(0);
-    		//practiceLeftA.set(0);
-    		//practiceLeftB.set(0);
-    		//practiceRightA.set(0);
-    		//practiceRightB.set(0);
-		} else if (selection.equals("Right")){
-			while(t.get() < 1.0){
-				left.set(0);
-				right.set(0);
-			}
-			while(t.get() < 2.9){
-				left.set(-0.34);
-				right.set(0.33);
-			}
-			while(t.get() < 3.0){
-				left.set(0);
-				right.set(0);
-			}
-			while(t.get() < 3.3){
-				left.set(-0.35);
+			while(t.get() < 1.9){
+				left.set(0.34);
 				right.set(-0.33);
 			}
-			while(t.get() < 3.5){
+			while(t.get() < 2.0){
 				left.set(0);
 				right.set(0);
 			}
-			while(t.get() < 4.25){
-				left.set(-0.35);
+			while(t.get() < 2.3){
+				left.set(0.35);
 				right.set(0.33);
+			}
+			while(t.get() < 2.5){
+				left.set(0);
+				right.set(0);
+			}
+			while(t.get() < 3.25){
+				left.set(0.34);
+				right.set(-0.33);
 			}
 			left.set(0);
 			right.set(0);
+		} else if (selection.equals("Right")){
 			
-			/*
-			 * turn a bit more, right side too fast on straight, short distance too short
-			 */
+			while(t.get() < 1.8){
+				left.set(0.4);
+				right.set(-0.32);
+			}
+			while(t.get() < 2.0){
+				left.set(0);
+				right.set(0);
+			}
+			while(t.get() < 2.45){ //comp amounts in comments (MV)
+				left.set(-0.4); //0.35
+				right.set(-0.32); //0.33
+			}
+			while(t.get() < 2.5){
+				left.set(0);
+				right.set(0);
+			}
+			while(t.get() < 3.7){
+				left.set(0.4);
+				right.set(-0.32);
+			}
+			
+			left.set(0);
+			right.set(0);
 			
 			
 			
-		} else if (selection.equals("Fuel")){
-			//getAlliance stuff
+			
+		} else if (selection.equals("Test")){
+			//test Left Side
+			while(t.get() < 1.9){ //move forward 1.9 sec
+				left.set(0.4);
+				right.set(-0.32);
+			}
+			while(t.get() < 2.0){ //pause 0.1 sec
+				left.set(0);
+				right.set(0);
+			}
+			while(t.get() < 2.32){ //(MV) turn clockwise for 0.32 sec
+				left.set(0.4); //0.35
+				right.set(0.32); //0.33
+			}
+			while(t.get() < 2.5){ //pause 0.18 sec
+				left.set(0);
+				right.set(0);
+			}
+			while(t.get() < 3.2){ //move forward 0.7 sec
+				left.set(0.4);
+				right.set(-0.32);
+			}
+			//stop
+			left.set(0);
+			right.set(0);
 		} else {
 			//do nothing because for some reason it broke
 		}
@@ -201,12 +205,12 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
-        chooser.addObject("My Auto", middleAuto);
+        chooser.addObject("Middle", middleAuto);
         chooser.addObject("Left", leftAuto);
         chooser.addObject("Right", rightAuto);
-        chooser.addObject("Fuel", fuelAuto);
+        chooser.addObject("Test", testAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        CameraServer.getInstance().startAutomaticCapture(0);
+        CameraServer.getInstance().startAutomaticCapture(cam);
     }
     
 	/**
@@ -247,9 +251,9 @@ public class Robot extends IterativeRobot {
     			runAuto = false;
     		}
             break;
-    	case fuelAuto:
+    	case testAuto:
     		if (runAuto){
-    			autoCode("Fuel");
+    			autoCode("Test");
     			runAuto = false;
     		}
             break;
@@ -265,18 +269,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
 		
-    	/*
-    	 * if (runIntake)
-    	 *     intake.set(0.3);
-    	 * else
-    	 *     intake.set(0);
-    	 */
-    	/*
-    	if (lineSensor.getRaw() > 650)
-    		testStuff.set(0.5);
-    	else
-    		testStuff.set(0);
-    	*/
+    	
 		//Driving
     	double rightAxis = xbox.getRawAxis(5), leftAxis = -xbox.getRawAxis(1); 
 		
@@ -292,7 +285,7 @@ public class Robot extends IterativeRobot {
     	if (goodDriver){
     		
     		driverForwardSpeed = 0.75;
-			driverTurnSpeed = 0.33;
+			driverTurnSpeed = 0.2;
 			
     	} else {
     		
@@ -330,27 +323,37 @@ public class Robot extends IterativeRobot {
     	//Climbing
     	
     	if (!climbingReverseEnabled && xbox.getRawButton(8) && xbox.getRawButton(5) && xbox.getRawButton(6)) { //if start + left bumper + right bumper, unlock winch reverse
-    		climbingReverseEnabled = true; 
+    		//climbingReverseEnabled = true; 
     	} //if start + left bumper + right bumper, unlock winch reverse
     	
-    	if (climbingReverseEnabled && (xbox.getRawAxis(2) > 0.05)){ //if winch can reverse and left trigger, reverse at speed of press
-    		winchA.set(-(xbox.getRawAxis(2))*0.1);
-    		winchB.set(-(xbox.getRawAxis(2))*0.1);
+    	if ( (xbox.getRawAxis(2) > 0.05)){ //if winch can reverse and left trigger, reverse at speed of press
+    		winchA.set(-(xbox.getRawAxis(2))*0.5);
+    		winchB.set(-(xbox.getRawAxis(2))*0.5);
     	} else if (xbox.getRawAxis(3) > 0.05) { //else if right trigger, climb (forward) at speed of press
-    		winchA.set(xbox.getRawAxis(3)*0.5);
-    		winchB.set(xbox.getRawAxis(3)*0.5);
+    		winchA.set(xbox.getRawAxis(3)*0.7);
+    		winchB.set(xbox.getRawAxis(3)*0.7);
     	} else { //else stop
     		winchA.set(0);
     		winchB.set(0);
     	}
 		
     	
+    	//Shooter
+    	if(xbox.getRawAxis(2)>0.5){
+    		shooter.set((xbox.getRawAxis(2)*0.75));
+    	} else {
+    		shooter.set(0);
+    	}
+    	
+    	
+    	
+    	/*
+    	 
     	//Intake
     	if (xbox.getRawButton(5)) //Left Bumper (?)
     		intake.set(0.3);
     	else
     		intake.set(0);
-    	
     	
     	
     	//Shooter
@@ -378,95 +381,13 @@ public class Robot extends IterativeRobot {
     		charging = false;
     	}
     	
+    	*/
     	
     	
     	
     	
     	
-    	
-    	
-		/* OLD CODE
-		//Climbing
-		if(xbox.getRawButton(8)){ //Start button
-			
-			if (climbing == 2){
-				
-				climbing = 0;
-				
-			} else {
-				
-				climbing++;
-				
-			}
-			
-		}
-		
-		
-		if(climbing != 0 && xbox.getRawButton(5)){ //Left Bumper
-			
-			if (climbing == 1){
-				
-				winch.set(1);
-				
-				if (testMotor == 0)
-					testStuff.set(1);
-			
-			} else if (climbing == 2){
-				
-				winch.set(-1);
-				
-				if (testMotor == 0)
-					testStuff.set(-1);
-			
-			}
-		
-		} else {
-		
-			winch.set(0);
-			
-			if (testMotor == 0)
-				testStuff.set(0);
-		
-		}
-		
-		
-		
-		//Ball Intake
-		if(xbox.getRawAxis(2) > 0.2){ //Left Trigger
-			
-			intake.set(0.3);
-			
-			if (testMotor == 1)
-				testStuff.set(0.3);
-		
-		} else {
-		
-			intake.set(0);
-			
-			if (testMotor == 1)
-				testStuff.set(0);
-		
-		}
-		
-		
-		
-		//Shooter
-		if(xbox.getRawAxis(3) > 0.2){ //Right Trigger
-		
-			//shooter.set(0.7);
-			
-			if (testMotor == 2)
-				testStuff.set(0.7);
-		
-		} else {
-		
-			//shooter.set(0);
-			
-			if (testMotor == 2)
-				testStuff.set(0);
-		
-		}
-		*/
+    
     	
     	/*
 		//Test Stuff
