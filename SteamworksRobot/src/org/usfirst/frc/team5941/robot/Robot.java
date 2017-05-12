@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
 	boolean runAuto = true;
 	Timer t = new Timer();
     
-	UsbCamera cam = new UsbCamera("cam0", 0);
+	//UsbCamera cam = new UsbCamera("cam0", 0);
 	
 	/**
 	 * This function is for 1 run of autonomous
@@ -90,13 +90,13 @@ public class Robot extends IterativeRobot {
 			 */
 			
 			
-			while (t.get() < 1.6){ //Backward for 1.5 seconds (for gear delivery) 
+			while (t.get() < 1.68){ //Backward for 1.5 seconds (for gear delivery) 
 				/*
 				 * for 0.5 speed (0.46 right), 1.75 sec
 				 * for 0.35 speed (0.33 right), 2.5 sec
 				 */
-	        	left.set(0.38);
-	        	right.set(-0.32);
+	        	left.set(0.35);
+	        	right.set(-0.33); //was -0.32
 	    		//practiceLeftA.set(0.35); 
 	    		//practiceLeftB.set(0.35);
 	    		//practiceRightA.set(-0.33); 
@@ -135,14 +135,14 @@ public class Robot extends IterativeRobot {
 		} else if (selection.equals("Right")){
 			
 			while(t.get() < 1.8){
-				left.set(0.4);
+				left.set(0.36); //was 0.4, also tried 0.38
 				right.set(-0.32);
 			}
 			while(t.get() < 2.0){
 				left.set(0);
 				right.set(0);
 			}
-			while(t.get() < 2.45){ //comp amounts in comments (MV)
+			while(t.get() < 2.5){ //comp amounts in comments (MV)
 				left.set(-0.4); //0.35
 				right.set(-0.32); //0.33
 			}
@@ -150,8 +150,8 @@ public class Robot extends IterativeRobot {
 				left.set(0);
 				right.set(0);
 			}
-			while(t.get() < 3.7){
-				left.set(0.4);
+			while(t.get() < 4.05){ //was 3.7, 3.85 was just short, 3.95 was on peg but not enough to pull up
+				left.set(0.35); //was 0.4, also tried 0.38
 				right.set(-0.32);
 			}
 			
@@ -162,6 +162,7 @@ public class Robot extends IterativeRobot {
 			
 			
 		} else if (selection.equals("Test")){
+			/*
 			//test Left Side
 			while(t.get() < 1.9){ //move forward 1.9 sec
 				left.set(0.4);
@@ -186,6 +187,33 @@ public class Robot extends IterativeRobot {
 			//stop
 			left.set(0);
 			right.set(0);
+			*/
+			
+			//RIGHT SIDE BLUE
+			while(t.get() < 1.8){
+				left.set(0.36); //was 0.4, also tried 0.38
+				right.set(-0.32);
+			}
+			while(t.get() < 2.0){
+				left.set(0);
+				right.set(0);
+			}
+			while(t.get() < 2.5){ //comp amounts in comments (MV)
+				left.set(-0.4); //0.35
+				right.set(-0.32); //0.33
+			}
+			while(t.get() < 2.5){
+				left.set(0);
+				right.set(0);
+			}
+			while(t.get() < 4.15){ //was 3.7, 3.85 was just short, 3.95 was on peg but not enough to pull up
+				left.set(0.35); //was 0.4, also tried 0.38
+				right.set(-0.32);
+			}
+			
+			left.set(0);
+			right.set(0);
+			
 		} else {
 			//do nothing because for some reason it broke
 		}
@@ -210,7 +238,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Right", rightAuto);
         chooser.addObject("Test", testAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        CameraServer.getInstance().startAutomaticCapture(cam);
+        CameraServer.getInstance().startAutomaticCapture(0);
     }
     
 	/**
@@ -285,7 +313,7 @@ public class Robot extends IterativeRobot {
     	if (goodDriver){
     		
     		driverForwardSpeed = 0.75;
-			driverTurnSpeed = 0.2;
+			driverTurnSpeed = 0.35;
 			
     	} else {
     		
@@ -296,7 +324,7 @@ public class Robot extends IterativeRobot {
     	
     	
 		//If turning motors at 33% speed, else at 75% speed
-    	if((rightAxis > 0 && leftAxis > 0) || (rightAxis < 0 && leftAxis < 0)){
+    	if((rightAxis > 0.05 && leftAxis > 0.05) || (rightAxis < -0.05 && leftAxis < -0.05)){
     		
 			right.set(rightAxis*driverTurnSpeed);
     		left.set(leftAxis*driverTurnSpeed);
@@ -337,14 +365,14 @@ public class Robot extends IterativeRobot {
     		winchB.set(0);
     	}
 		
-    	
+    	/*
     	//Shooter
     	if(xbox.getRawAxis(2)>0.5){
     		shooter.set((xbox.getRawAxis(2)*0.75));
     	} else {
     		shooter.set(0);
     	}
-    	
+    	*/
     	
     	
     	/*
